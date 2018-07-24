@@ -6,20 +6,14 @@ galaxy_info:
 
   min_ansible_version: 2.4
 
-  platforms:
-  - name: Debian
-    versions:
-    - 8
-    - 9
-
   galaxy_tags:
   - docker
   - dicom
   - orthanc
 
-dependencies:
-- role: geerlingguy.docker
-  docker-compose_version: 3.4
-
-- role: matic-insurance.docker-postgres
-  when: orthanc_pg_backend
+dependencies: []
+#- role: geerlingguy.docker
+#  docker-compose_version: 3.4
+#
+#- role: matic-insurance.docker-postgres
+#  when: orthanc_pg_backend
