@@ -20,10 +20,6 @@ install:
   # Install Ansible
   - pip install ansible docker-py
 
-  # Add ansible.cfg to pick up roles path
-  - "echo '[defaults]\nroles_path = ../' > ansible1.cfg"
-  - cat ansible1.cfg
-
 script:
   # We'll add some commands to test the role here.
   # Check the role/playbook's syntax.
