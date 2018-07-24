@@ -86,7 +86,7 @@ Author Information
 ------------------
 
 Derek Merck  
-<derek_merck@brown.edu>
+<derek_merck@brown.edu>  
 Rhode Island Hospital and Brown University  
 Providence, RI  
 
