@@ -2,10 +2,8 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - role: orthanc-docker
+    - role: ansible-orthanc-docker
       orthanc_image: jodogne/orthanc
-      orthanc_api_port: 18042
-      orthanc_dicom_port: 14242
 
 #    - role: orthanc-docker
 #      orthanc_image: osimis/orthanc
