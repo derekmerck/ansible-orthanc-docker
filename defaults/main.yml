@@ -1,0 +1,37 @@
+---
+# defaults file for orthanc-docker
+
+# Docker image
+# -----------------------------
+
+orthanc_docker_image:       "jodogne/orthanc"         # vanilla
+#orthanc_docker_image:       "jodogne/orthanc-plugins" # pg backend support
+#orthanc_docker_image:       "osimis/orthanc"          # web viewer, easy config
+#orthanc_docker_image:       "derekmerck/orthanc"      # multiarch bleeding-edge release
+orthanc_docker_image_tag:   "latest"
+
+# Docker container configuration
+# -----------------------------
+orthanc_container_name:     "orthanc"
+orthanc_use_data_container: True
+orthanc_data_dir:           "/opt/orthanc/db"
+orthanc_config_dir:         "/opt/orthanc"
+orthanc_aet_port:           8042  # These are port aliases
+orthanc_dicom_port:         4242
+orthanc_container_timezone: "America/New_York"
+
+# Service configuration
+# -----------------------------
+orthanc_title:              "Orthanc"
+orthanc_aet:                "ORTHANC"
+orthanc_user:               "orthanc"
+orthanc_password:           "passw0rd!"
+
+
+# Backend db configuration
+# -----------------------------
+orthanc_pg_backend:         False
+orthanc_pg_user:            "orthanc"
+orthanc_pg_password:        "passw0rd!"
+orthanc_pg_host:            "localhost"
+orthanc_pg_port:            5432
