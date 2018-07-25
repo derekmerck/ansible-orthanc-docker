@@ -3,10 +3,6 @@
   remote_user: root
   roles:
 
-    - role: geerlingguy.pip
-      pip_install_packages: docker
-    - role: geerlingguy.docker
-
     - role: ansible-orthanc-docker
       orthanc_image: jodogne/orthanc
 
