@@ -3,8 +3,8 @@
 language: python
 python: "2.7"
 
-services:
-  - docker
+#services:
+#  - docker
 
 addons:
   apt:
@@ -23,7 +23,9 @@ before_install:
 
 install:
   # Install Ansible
-  - pip install ansible docker-py
+  - pip install ansible
+
+  - ansible-galaxy install geerlingguy.pip geerlingguy.docker
 
 script:
   # We'll add some commands to test the role here.
