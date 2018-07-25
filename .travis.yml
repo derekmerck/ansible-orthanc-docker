@@ -21,6 +21,8 @@ env:
   matrix:
     - orthanc_docker_image: jodogne/orthanc
     - orthanc_docker_image: derekmerck/orthanc
+    - orthanc_docker_image: jodogne/orthanc-plugins
+      orthanc_pg_backend:   True
 
 before_install:
   # Make sure everything's up to date.
@@ -31,7 +33,7 @@ install:
   - pip install ansible
 
   # Install deps
-  - ansible-galaxy install geerlingguy.pip geerlingguy.docker
+  - ansible-galaxy install geerlingguy.pip geerlingguy.docker matic-insurance.docker-postgres
 
 script:
   # We'll add some commands to test the role here.
@@ -53,4 +55,4 @@ script:
   - "curl -u ${orthanc_default_user}:${orthanc_default_password} http://localhost:${orthanc_default_api_port}/"
 
 notifications:
-    webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
