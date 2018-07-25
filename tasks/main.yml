@@ -36,9 +36,9 @@
       - '{{ orthanc_api_port }}:8042'
       - '{{ orthanc_dicom_port }}:4242'
 
-    volumes_from: '{{ [(orthanc_container_name + "-data")] if orthanc_use_data_container else [] }}'
+    volumes_from: '{{ [orthanc_container_name + "-data"] if orthanc_use_data_container else [] }}'
 
-    volumes: '{{ ["/etc/orthanc/orthanc.json:/etc/orthanc/orthanc.json:ro"] + [(orthanc_data_dir + ":/var/lib/orthanc/db")] if not orthanc_use_data_container else [] }}'
+    volumes: '{{ ["/etc/orthanc/orthanc.json:/etc/orthanc/orthanc.json:ro"] + [orthanc_data_dir + ":/var/lib/orthanc/db"] if not orthanc_use_data_container else [] }}'
     links: '{{ [orthanc_pg_host] if orthanc_pg_backend else [] }}'
     env:
       TZ: '{{ orthanc_container_timezone }}'
@@ -46,4 +46,4 @@
 
 - name: Wait until Orthanc is available
   wait_for: port={{ orthanc_api_port }} delay=3
-  when: postgres_container.changed
+  when: orthanc_container.changed
