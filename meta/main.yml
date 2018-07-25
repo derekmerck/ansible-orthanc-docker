@@ -21,6 +21,6 @@ dependencies:
 
   - role: matic-insurance.docker-postgres
     postgres_user:      '{{ postgres_user }}'
-    postgres_password:  '{{ postgres_passworld }}'
+    postgres_password:  '{{ postgres_password }}'
     postgres_database:  '{{ postgres_database }}'
     when: orthanc_pg_backend
