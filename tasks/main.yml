@@ -28,7 +28,7 @@
 - name: Setup Orthanc container
   docker_container:
     name:  '{{ orthanc_container_name }}'
-    image: '{{ orthanc_docker_image }}:{{ orthanc_docker_tag }}'
+    image: '{{ orthanc_docker_image }}:{{ orthanc_docker_image_tag }}'
     state:  started
     memory: '{{ container_memory_limit | default(omit) }}'
     ports:
