@@ -32,14 +32,19 @@
     name:  '{{ orthanc_container_name }}'
     image: '{{ orthanc_docker_image + ":" + orthanc_docker_image_tag }}'
     state:  started
-    memory: '{{ container_memory_limit | default(omit) }}'
     ports:
       - '{{ orthanc_api_port }}:8042'
       - '{{ orthanc_dicom_port }}:4242'
+
     volumes_from:
-      - '{{ (orthanc_container_name + "-data") if orthanc_use_data_container else None | default(omit) }}'
-    volumes: [ '/etc/orthanc/orthanc.json:/etc/orthanc/orthanc.json:ro', '{{ (orthanc_data_dir + ":/var/lib/orthanc/db") if not orthanc_use_data_container else None | default(omit) }}' ]
-    links: [ '{{ orthanc_pg_host if orthanc_pg_backend else None | default(omit) }}' ]
+      - '{{ (orthanc_container_name + "-data") if orthanc_use_data_container else [] }}'
+
+
+    volumes:
+      - '/etc/orthanc/orthanc.json:/etc/orthanc/orthanc.json:ro'
+      - '{{ (orthanc_data_dir + ":/var/lib/orthanc/db") if not orthanc_use_data_container else None }}'
+    links:
+      - '{{ orthanc_pg_host if orthanc_pg_backend else [] }}'
     env:
       TZ: '{{ orthanc_container_timezone }}'
   register: orthanc_container

@@ -11,10 +11,11 @@ galaxy_info:
   - dicom
   - orthanc
 
-dependencies:
-  - role: geerlingguy.pip
-    pip_install_packages: docker
-  - role: geerlingguy.docker
+dependencies: []
+
+#  - role: geerlingguy.pip
+#    pip_install_packages: docker
+#  - role: geerlingguy.docker
 
 #- role: matic-insurance.docker-postgres
 #  when: orthanc_pg_backend
