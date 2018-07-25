@@ -37,12 +37,12 @@
       - '{{ orthanc_api_port + ":8042" }}'
       - '{{ orthanc_dicom_port + ":4242" }}'
     volumes_from:
-      - '{{ (orthanc_container_name + "-data") if orthanc_use_data_container | default(omit) }}'
+      - '{{ (orthanc_container_name + "-data") if orthanc_use_data_container else None | default(omit) }}'
     volumes:
       - '/etc/orthanc/orthanc.json:/etc/orthanc/orthanc.json:ro'
-      - '{{ orthanc_data_dir + ":/etc/orthanc/db") if not orthanc_use_data_container | default(omit) }}'
+      - '{{ orthanc_data_dir + ":/etc/orthanc/db") if not orthanc_use_data_container else None | default(omit) }}'
     links:
-      - '{{ orthanc_pg_host if orthanc_pg_backend | default(omit) }}'
+      - '{{ orthanc_pg_host if orthanc_pg_backend else None | default(omit) }}'
     env:
       TZ: '{{ orthanc_container_timezone }}'
   register: orthanc_container

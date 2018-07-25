@@ -45,3 +45,6 @@ script:
 
   # Request a page via the web server, to make sure it's running and responds.
   - "curl -u ${orthanc_default_user}:${orthanc_default_password} http://localhost:${orthanc_default_api_port}/"
+
+notifications:
+    webhooks: https://galaxy.ansible.com/api/v1/notifications/
