@@ -12,14 +12,15 @@ addons:
       - python-pip
 
 env:
-  # Defaults
-  orthanc_default_user:     orthanc
-  orthanc_default_password: passw0rd!
-  orthanc_default_api_port: 8042
+  global:
+    # Defaults
+    orthanc_default_user:     orthanc
+    orthanc_default_password: passw0rd!
+    orthanc_default_api_port: 8042
 
   matrix:
     - orthanc_docker_image: jodogne/orthanc
-    - orthanc_docker_image:
+    - orthanc_docker_image: derekmerck/orthanc
 
 before_install:
   # Make sure everything's up to date.
