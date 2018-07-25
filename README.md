@@ -36,7 +36,7 @@ orthanc_container_name:     "orthanc"
 orthanc_use_data_container: True
 orthanc_data_dir:           "/opt/orthanc/db"
 orthanc_config_dir:         "/opt/orthanc"
-orthanc_aet_port:           8042
+orthanc_api_port:           8042
 orthanc_dicom_port:         4242
 orthanc_container_timezone: "America/New_York"
 ```
