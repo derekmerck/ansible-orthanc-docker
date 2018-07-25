@@ -3,7 +3,7 @@
   remote_user: root
   roles:
 
-    - role: orthanc-docker
+    - role: ansible-orthanc-docker
       orthanc_image: jodogne/orthanc
 
 #    - role: orthanc-docker

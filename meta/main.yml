@@ -13,9 +13,9 @@ galaxy_info:
 
 dependencies: []
 
-#  - role: geerlingguy.pip
-#    pip_install_packages: docker
-#  - role: geerlingguy.docker
+  - role: geerlingguy.pip
+    pip_install_packages: docker
+  - role: geerlingguy.docker
 
 #- role: matic-insurance.docker-postgres
 #  when: orthanc_pg_backend
