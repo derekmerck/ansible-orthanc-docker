@@ -34,8 +34,8 @@
     state:  started
     memory: '{{ container_memory_limit | default(omit) }}'
     ports:
-      - '{{ orthanc_api_port + ":8042" }}'
-      - '{{ orthanc_dicom_port + ":4242" }}'
+      - '{{ orthanc_api_port }}:8042'
+      - '{{ orthanc_dicom_port }}:4242'
     volumes_from:
       - '{{ (orthanc_container_name + "-data") if orthanc_use_data_container else None | default(omit) }}'
     volumes:

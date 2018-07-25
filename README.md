@@ -8,7 +8,7 @@ Configure and run an [Orthanc](https://www.orthanc-server.com) DICOM node in a D
 Requirements
 --------------
 
-Requires `docker_image` and `docker_container` modules.
+Requires Docker, Docker-py and the `docker_image` and `docker_container` modules.
 
 Role Variables
 --------------
@@ -24,14 +24,14 @@ Select an Orthanc image and tag.
 
 [Orthanc For Docker]: http://book.orthanc-server.com/users/docker.html
 
-```yml
+```yaml
 orthanc_docker_image:       "jodogne/orthanc"
 orthanc_docker_image_tag:   "latest"
 ```
 
 ### Docker Container Configuration
 
-```yml
+```yaml
 orthanc_container_name:     "orthanc"
 orthanc_use_data_container: True
 orthanc_data_dir:           "/opt/orthanc/db"
@@ -45,7 +45,7 @@ orthanc_container_timezone: "America/New_York"
 
 Configure the service.  These variables are used in the template config file.
 
-```yml
+```yaml
 orthanc_title:              "Orthanc"
 orthanc_aet:                "ORTHANC"
 orthanc_user:               "orthanc"
@@ -54,7 +54,7 @@ orthanc_password:           "passw0rd!"
 
 ### PostgreSQL Configuration
 
-```yml
+```yaml
 orthanc_pg_backend:         False
 orthanc_pg_user:            "orthanc"
 orthanc_pg_password:        "passw0rd!"
@@ -71,12 +71,10 @@ Dependencies
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-```yml
+```yaml
 - hosts: servers
   roles:
-     - derekmerck.orthanc
+     - derekmerck.orthanc-docker
 ```
 
 License
