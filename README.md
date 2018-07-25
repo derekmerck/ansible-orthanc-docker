@@ -1,7 +1,9 @@
 Orthanc-Docker
 ==============
 
-Configure and run an [Orthanc](https://www.orthanc-server.com) DICOM node in a Docker container
+[![Build Status](https://travis-ci.org/derekmerck/ansible-orthanc-docker.svg?branch=master)](https://travis-ci.org/derekmerck/ansible-orthanc-docker)
+
+Configure and run an [Orthanc](https://www.orthanc-server.com) DICOM node in a Docker container.
 
 Requirements
 --------------
