@@ -4,7 +4,8 @@
   roles:
 
     - role: ansible-orthanc-docker
-      orthanc_docker_image: "{{ orthanc_docker_image | default( omit ) }}"
+      orthanc_docker_image: "{{ ansible_env.orthanc_docker_image ) | default( omit ) }}"
+      orthanc_pg_backend: "{{ ansible_env.orthanc_pg_backend | default( omit ) }}"
 
 #    - role: orthanc-docker
 #      orthanc_image: osimis/orthanc
