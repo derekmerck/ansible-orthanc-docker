@@ -3,5 +3,5 @@
   roles:
 
     - role: '{{ "orthanc-docker" if test_host=="vagrant" else "ansible-orthanc-docker" }}'
-      orthanc_docker_image: "{{ ansible_env.orthanc_docker_image | default( 'jodogne/orthanc' ) }}"
-      orthanc_pg_backend: "{{ ansible_env.orthanc_pg_backend | default( False ) }}"
+      orthanc_docker_image: "{{ orthanc_docker_image | default( 'jodogne/orthanc' ) }}"
+      orthanc_pg_backend: "{{ orthanc_pg_backend | default( False ) }}"
