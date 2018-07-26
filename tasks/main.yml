@@ -41,7 +41,7 @@
 
     volumes_from: '{{ [orthanc_container_name + "-data"] if orthanc_use_data_container else [] }}'
 
-    volumes: '{{ ["{}/orthanc.json:/etc/orthanc/orthanc.json:ro".format(orthanc_config_dir)] + ([orthanc_data_dir + ":/var/lib/orthanc/db"] if not orthanc_use_data_container else []) }}'
+    volumes: '{{ ["{}/orthanc.json:/etc/orthanc/orthanc.json:ro".format(orthanc_config_dir)] + ([orthanc_data_dir + ":/var/lib/orthanc/db:z"] if not orthanc_use_data_container else []) }}'
     links: '{{ [orthanc_pg_host] if orthanc_pg_backend else [] }}'
     env:
       TZ: '{{ orthanc_container_timezone }}'

@@ -41,12 +41,14 @@ install:
 script:
   # We'll add some commands to test the role here.
   # Check the role/playbook's syntax.
-  - "ansible-playbook -i tests/test_inv.yml tests/test_play.yml --syntax-check"
+  - 'ansible-playbook -i tests/test_inv.yml tests/test_play.yml --syntax-check
+     -e test_host=${test_host}'
 
   # Run the role/playbook with ansible-playbook.
   # add "-vvv" for complete output for debugging
   - 'ansible-playbook -i tests/test_inv.yml tests/test_play.yml --connection=local --sudo
-     -e "orthanc_docker_image=${orthanc_docker_image}"
+     -e test_host=${test_host}
+     -e orthanc_docker_image=${orthanc_docker_image}
      -e orthanc_pg_backend=${orthanc_pg_backend}'
 
 #  # Run the role/playbook again, checking to make sure it's idempotent.
