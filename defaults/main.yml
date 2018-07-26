@@ -34,7 +34,7 @@ orthanc_pg_backend:         False
 orthanc_pg_user:            "orthanc"
 orthanc_pg_password:        "passw0rd!"
 
-postgres_user:              "postgres"
-postgres_password:          "passw0rd!"
-postgres_host:              "localhost"
-postgres_port:              5432
+#postgres_user:              "postgres"
+#postgres_password:          "passw0rd!"
+orthanc_pg_host:             "postgres"
+orthanc_pg_port:             5432

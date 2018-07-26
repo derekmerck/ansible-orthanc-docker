@@ -40,11 +40,12 @@
   // folders, in which case they will be scanned non-recursively to
   // find shared libraries. Backslashes must be either escaped by
   // doubling them, or replaced by forward slashes "/".
-  "Plugins" : [ 
-    "/usr/share/orthanc/plugins", "/usr/local/share/orthanc/plugins"
+  "Plugins" : [
+    {% if orthanc_pg_backend %}
+    "/usr/local/share/orthanc/plugins/libOrthancPostgreSQLIndex.so",
+    "/usr/local/share/orthanc/plugins/libOrthancPostgreSQLStorage.so"
+    {% endif %}
   ],
-
-
 
   /**
    * Configuration of the HTTP server
@@ -372,4 +373,17 @@
     // "7053,1003" : [ "ST", "Original Image Filename", 1, 1, "Philips PET Private Group" ]
     // "2001,5f" : [ "SQ", "StackSequence", 1, 1, "Philips Imaging DD 001" ]
   }
+
+{%- if orthanc_pg_backend %},
+  "PostgreSQL" : {
+    "EnableIndex" : true,
+    "EnableStorage" : false,
+    "Host" : "{{ orthanc_pg_host }}",
+    "Port" : "{{ orthanc_pg_port }}",
+    "Database" : "{{ orthanc_container_name }}",
+    "Username" : "{{ orthanc_pg_user }}",
+    "Password" : "{{ orthanc_pg_password }}"
+  }
+{% endif %}
+
 }

@@ -15,13 +15,16 @@ galaxy_info:
 
 dependencies:
 
+  - role: geerlingguy.docker
   - role: geerlingguy.pip
     pip_install_packages: docker
-  - role: geerlingguy.docker
 
   - role: matic-insurance.docker-postgres
-    postgres_user:      '{{ postgres_user }}'
-    postgres_password:  '{{ postgres_password }}'
-    postgres_database:  '{{ postgres_database }}'
-    postgres_port:      '{{ postgres_port }}'  # No way to disable this alias entirely
+    postgres_user:      '{{ orthanc_pg_user }}'
+    postgres_password:  '{{ orthanc_pg_password }}'
+    postgres_database:  '{{ orthanc_container_name }}'
+    postgres_port:      15432
+    # TODO: No way to disable the port alias entirely, set it to something high
+#    container_memory_limit: 512m
+    # TODO: Should make this _big_ for archives, small for queues
     when: orthanc_pg_backend
