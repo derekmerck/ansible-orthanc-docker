@@ -46,10 +46,8 @@ script:
 
   # Run the role/playbook with ansible-playbook.
   # add "-vvv" for complete output for debugging
-  - "ansible-playbook -i tests/test_inv.yml tests/test_play.yml --connection=local --sudo
-     -e test_host=${test_host}
-     -e orthanc_docker_image=${orthanc_docker_image}
-     -e orthanc_pg_backend=${orthanc_pg_backend}"
+  - 'ansible-playbook -i tests/test_inv.yml tests/test_play.yml --connection=local --sudo
+     -e test_host=${test_host}'
 
 #  # Run the role/playbook again, checking to make sure it's idempotent.
 #  - >
