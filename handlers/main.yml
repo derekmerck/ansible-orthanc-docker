@@ -4,4 +4,5 @@
 - name: stop_orthanc_container
   docker_container:
     name: "{{ orthanc_container_name }}"
-    state: stopped
+    state: started
+    restarted: true
