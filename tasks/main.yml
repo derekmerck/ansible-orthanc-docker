@@ -28,8 +28,6 @@
     name: '{{ orthanc_docker_image }}'
     tag:  '{{ orthanc_docker_image_tag }}'
 
-- meta: flush_handlers
-
 - name: Setup Orthanc container
   docker_container:
     name:  '{{ orthanc_container_name }}'
@@ -46,6 +44,8 @@
     env:
       TZ: '{{ orthanc_container_timezone }}'
   register: orthanc_container
+
+- meta: flush_handlers
 
 - name: Wait until Orthanc is available
   wait_for: port={{ orthanc_api_port }} delay=3
