@@ -10,6 +10,13 @@
       - '/var/lib/orthanc/db'
   when: orthanc_use_data_container
 
+- name:    "Setup orthanc data folder"
+  file:
+    path:  "{{ orthanc_data_dir }}"
+    state: directory
+  become:  yes
+  when: not orthanc_use_data_container
+
 - name: "Create {{ orthanc_config_dir }} directory for config"
   file:
     path: '{{ orthanc_config_dir }}'

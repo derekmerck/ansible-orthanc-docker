@@ -382,7 +382,8 @@
     "Port" : {{ orthanc_pg_port | default(5432) }},
     "Database" : "{{ orthanc_container_name }}",
     "Username" : "{{ orthanc_pg_user }}",
-    "Password" : "{{ orthanc_pg_password }}"
+    "Password" : "{{ orthanc_pg_password }}",
+    "Lock": false
   }
 {% endif %}
 

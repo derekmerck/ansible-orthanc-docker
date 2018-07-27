@@ -22,7 +22,7 @@ dependencies:
   - role: matic-insurance.docker-postgres
     postgres_user:      '{{ orthanc_pg_user }}'
     postgres_password:  '{{ orthanc_pg_password }}'
-    postgres_database:  '{{ orthanc_container_name }}'
+    postgres_database:  '{{ orthanc_pg_database }}'
     postgres_port:      15432
     # TODO: No way to disable the port alias entirely, set it to something high
 #    container_memory_limit: 512m

@@ -5,10 +5,16 @@ Orthanc-Docker
 
 Configure and run an [Orthanc](https://www.orthanc-server.com) DICOM node in a Docker container.
 
+
 Requirements
 --------------
 
-Requires Docker, Docker-py and the `docker_image` and `docker_container` modules.
+- [Docker][]
+- [docker-py][]
+
+[Docker]: https://www.docker.com
+[docker-py]: https://docker-py.readthedocs.io
+
 
 Role Variables
 --------------
@@ -19,10 +25,12 @@ Select an Orthanc image and tag.
 
 - `jodogne/orthanc` is the official vanilla [Orthanc for Docker][] build maintained by Sébastien Jodogne
 - `jodogne/orthanc-plugins` is the official build supporting the Postgresql backend
-- `osimis/orthanc` is a spin with Osimis's excellent third party web viewer for review and annotation
-- `derekmerck/orthanc` is a multi-architecture bleeding edge release spin
+- `osimis/orthanc` is a third-party [Osimis for Docker][] spin with an excellent web viewer for review and annotation
+- `derekmerck/orthanc` is a third-party multi-architecture (amd64, arm32v7) bleeding-edge release spin from [diana-plus][]
 
 [Orthanc For Docker]: http://book.orthanc-server.com/users/docker.html
+[Osimis for Docker]: https://osimis.atlassian.net/wiki/spaces/OKB/pages/26738689/How+to+use+osimis+orthanc+Docker+images
+[diana-plus]: https://github.com/derekmerck/diana_plus
 
 ```yaml
 orthanc_docker_image:       "jodogne/orthanc"
@@ -62,11 +70,14 @@ orthanc_pg_host:            "localhost"
 orthanc_pg_port:            5432
 ```
 
+
 Dependencies
 ------------
 
-- `geerlingguy.docker` to setup the docker environment
-- `matic-insurance.docker-postgres` to setup the postgres backend, if needed
+- [geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker) to setup the docker environment
+- [geerlingguy.pip](https://github.com/geerlingguy/ansible-role-pip) to install Python reqs
+- [matic-insurance.docker-postgres](https://github.com/matic-insurance/ansible-docker-postgres) to setup the postgres backend, if needed
+
 
 Example Playbook
 ----------------
@@ -77,10 +88,12 @@ Example Playbook
      - derekmerck.orthanc-docker
 ```
 
+
 License
 -------
 
 MIT
+
 
 Author Information
 ------------------
