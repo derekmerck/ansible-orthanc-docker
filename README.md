@@ -1,13 +1,27 @@
-Orthanc-Docker
-==============
+Ansible Role for Orthanc in Docker
+=================================
 
 [![Build Status](https://travis-ci.org/derekmerck/ansible-orthanc-docker.svg?branch=master)](https://travis-ci.org/derekmerck/ansible-orthanc-docker)
+
+Derek Merck  
+<derek_merck@brown.edu>  
+Rhode Island Hospital and Brown University  
+Providence, RI  
 
 Configure and run an [Orthanc](https://www.orthanc-server.com) DICOM node in a Docker container.
 
 
-Requirements
+Dependencies
 --------------
+
+### Galaxy Roles
+
+- [geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker) to setup the docker environment
+- [geerlingguy.pip](https://github.com/geerlingguy/ansible-role-pip) to install Python reqs
+- [matic-insurance.docker-postgres](https://github.com/matic-insurance/ansible-docker-postgres) to setup the postgres backend, if needed
+
+
+### Remote Node
 
 - [Docker][]
 - [docker-py][]
@@ -69,14 +83,6 @@ orthanc_pg_password:        "passw0rd!"
 orthanc_pg_host:            "localhost"
 orthanc_pg_port:            5432
 ```
-
-
-Dependencies
-------------
-
-- [geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker) to setup the docker environment
-- [geerlingguy.pip](https://github.com/geerlingguy/ansible-role-pip) to install Python reqs
-- [matic-insurance.docker-postgres](https://github.com/matic-insurance/ansible-docker-postgres) to setup the postgres backend, if needed
 
 
 Example Playbook
