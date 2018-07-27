@@ -20,6 +20,7 @@ dependencies:
     pip_install_packages: docker
 
   - role: matic-insurance.docker-postgres
+    postgres_docker_image_tag: "10"
     postgres_user:      '{{ orthanc_pg_user }}'
     postgres_password:  '{{ orthanc_pg_password }}'
     postgres_database:  '{{ orthanc_pg_database }}'
