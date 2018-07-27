@@ -1,6 +1,6 @@
 galaxy_info:
   author: Derek Merck
-  description: Run an [Orthanc](https://www.orthanc-server.com) DICOM node in a Docker container
+  description: Configure and run an [Orthanc](https://www.orthanc-server.com) DICOM node in a Docker container
 
   role_name: orthanc-docker
 
