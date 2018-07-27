@@ -28,7 +28,7 @@
     src: orthanc.json.j2
     dest: '{{ orthanc_config_dir + "/orthanc.json" }}'
   become: yes
-  notify: stop_orthanc_container
+  notify: restart_orthanc_container
 
 - name: "Pull Orthanc image - {{ orthanc_docker_image }}:{{ orthanc_docker_image_tag }}"
   docker_image:
