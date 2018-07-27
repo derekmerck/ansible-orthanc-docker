@@ -138,16 +138,21 @@
 
   // The list of the registered users. Because Orthanc uses HTTP
   // Basic Authentication, the passwords are stored as plain text.
-  "RegisteredUsers" : {
-    "orthanc" : "{{ orthanc_password | default('passw0rd!') }}"
-  },
-
+  "RegisteredUsers" :
+    {{ orthanc_users | default({}) | combine({"orthanc": orthanc_password}) | to_nice_json | safe | regex_replace('\_(?=.*": {)', '-')}},
 
   /**
    * Network topology
    **/
 
   // The list of the known DICOM modalities
+  // If port is quoted, it complains about not being an int, so use regex to remove "'s
+  {%  if orthanc_modalities %}
+  "DicomModalities":
+     {{ orthanc_modalities | to_nice_json | safe | regex_replace('"([0-9]+)"','\\1') }} ,
+  {% endif %}
+
+
   "DicomModalities" : {
     /**
      * Uncommenting the following line would enable Orthanc to
@@ -161,7 +166,7 @@
      * A fourth parameter is available to enable patches for
      * specific PACS manufacturers. The allowed values are currently:
      * - "Generic" (default value),
-     * - "GenericNoWildcardInDates" (to replace "*" by "" in date fields 
+     * - "GenericNoWildcardInDates" (to replace "*" by "" in date fields
      *   in outgoing C-Find requests originating from Orthanc)
      * - "GenericNoUniversalWildcard" (to replace "*" by "" in all fields
      *   in outgoing C-Find SCU requests originating from Orthanc)
@@ -193,6 +198,13 @@
   // considered as closed by the Orthanc SCU (client) if the remote
   // DICOM SCP (server) does not answer.
   "DicomScuTimeout" : 10,
+
+  // No underscores allowed!  Use a look ahead to find just the keys
+  {% if orthanc_peers %}
+  "OrthancPeers" :
+     {{ orthanc_peers | to_nice_json | safe | regex_replace('\_(?=.*": {)', '-')}},
+  {% endif %}
+
 
   // The list of the known Orthanc peers
   "OrthancPeers" : {

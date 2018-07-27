@@ -26,6 +26,17 @@ orthanc_aet:                "ORTHANC"
 orthanc_user:               "orthanc"
 orthanc_password:           "passw0rd!"
 
+#orthanc_users:
+#  my_user: some_password
+#
+#orthanc_peers:
+#  my_peer:       [ "http://127.0.0.1:8043/", "alice", "alicePassword" ]
+#  my_other_peer: [ "http://127.0.0.1:8043/", "bob", "bobPassword"]
+
+#orthanc_modalities:
+#  my_pacs: ["MY_PACS", "192.168.1.1", 104 ]
+#  my_workstation: ["MY_WORKSTATION", "192.168.1.2", 104 ]
+
 # Backend db configuration
 # -----------------------------
 orthanc_pg_backend:         False

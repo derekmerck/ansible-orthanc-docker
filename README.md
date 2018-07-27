@@ -74,6 +74,14 @@ orthanc_user:               "orthanc"
 orthanc_password:           "passw0rd!"
 ```
 
+Additional complex configuration items that are injected into `orthanc.conf`.  They must follow the appropriate format (see below)
+
+```yaml
+orthanc_users:              {}
+orthanc_peers:              {}
+orthanc_modalities:         {}
+```
+
 ### PostgreSQL Configuration
 
 ```yaml
@@ -95,6 +103,23 @@ Run a single orthanc instance.
 - hosts: dicom_node
   roles:
      - derekmerck.orthanc_docker
+```
+
+Run a single orthanc instance with some additional users and peers
+
+```yaml
+- hosts: dicom_node
+  roles:
+    - name: derekmerck.orthanc_docker
+      orthanc_users:
+        my_user: my_password        
+        my_other_user: another_password        
+      orthanc_peers:
+        my_peer:       [ "http://127.0.0.1:8043/", "alice", "alicePassword" ]
+        my_other_peer: [ "http://127.0.0.1:8043/", "bob", "bobPassword"]
+      orthanc_modalities:
+        my_pacs:        ["MY_PACS", "192.168.1.1", 104 ]
+        my_workstation: ["MY_WORKSTATION", "192.168.1.2", 104 ]
 ```
 
 Run multiple instances against the same backend for load balancing.

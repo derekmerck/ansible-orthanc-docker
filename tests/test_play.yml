@@ -5,3 +5,23 @@
     - role: '{{ "orthanc-docker" if test_host=="vagrant" else "ansible-orthanc-docker" }}'
       orthanc_docker_image: "{{ lookup('env', 'orthanc_docker_image') | default( 'jodogne/orthanc' ) }}"
       orthanc_pg_backend:   "{{ lookup('env', 'orthanc_pg_backend')   | default( False ) | bool }}"
+
+      orthanc_users:
+        my_user: some_password
+
+      orthanc_peers:
+        my_peer:       [ "http://127.0.0.1:8043/", "alice", "alicePassword" ]
+        my_other_peer: [ "http://127.0.0.1:8043/", "bob", "bobPassword"]
+
+      orthanc_modalities:
+        my_pacs: ["MY_PACS", "192.168.1.1", 104 ]
+        my_workstation: ["MY_WORKSTATION", "192.168.1.2", 104 ]
+
+      #orthanc_autorouting:
+      #  - type: peer
+      #    dest: my_other_peer
+      #    anon: true
+      #
+      # - type: modality
+      #   dest: my_pacs
+      #   compress: true
