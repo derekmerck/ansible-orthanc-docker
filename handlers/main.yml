@@ -5,4 +5,4 @@
   docker_container:
     name: "{{ orthanc_container_name }}"
     state: started
-    restart: truemk
+    restart: true
