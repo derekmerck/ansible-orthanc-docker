@@ -1,6 +1,8 @@
 ---
 # tasks file for orthanc-docker
 
+# TODO: Change container to not link to postgres, but call it on the docker bridge like snappass->redis, nginx->subs
+
 - name: Create data container
   docker_container:
     name: '{{ orthanc_container_name + "-data" }}'

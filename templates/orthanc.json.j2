@@ -147,13 +147,13 @@
 
   // The list of the known DICOM modalities
   // If port is quoted, it complains about not being an int, so use regex to remove "'s
-  {%  if orthanc_modalities %}
+  {%  if orthanc_modalities | default(false) %}
   "DicomModalities":
      {{ orthanc_modalities | to_nice_json | safe | regex_replace('"([0-9]+)"','\\1') }} ,
   {% endif %}
 
 
-  "DicomModalities" : {
+  //"DicomModalities" : {
     /**
      * Uncommenting the following line would enable Orthanc to
      * connect to an instance of the "storescp" open-source DICOM
@@ -175,7 +175,7 @@
      * This parameter is case-sensitive.
      **/
     // "clearcanvas" : [ "CLEARCANVAS", "192.168.1.1", 104, "ClearCanvas" ]
-  },
+  //},
 
   // Whether the Orthanc SCP allows incoming C-Echo requests, even
   // from SCU modalities it does not know about (i.e. that are not
@@ -200,14 +200,14 @@
   "DicomScuTimeout" : 10,
 
   // No underscores allowed!  Use a look ahead to find just the keys
-  {% if orthanc_peers %}
+  {% if orthanc_peers | default(false) %}
   "OrthancPeers" :
      {{ orthanc_peers | to_nice_json | safe | regex_replace('\_(?=.*": {)', '-')}},
   {% endif %}
 
 
   // The list of the known Orthanc peers
-  "OrthancPeers" : {
+  // "OrthancPeers" : {
     /**
      * Each line gives the base URL of an Orthanc peer, possibly
      * followed by the username/password pair (if the password
@@ -231,7 +231,7 @@
     //   "CertificateKeyPassword" : "certpass",
     //   "Pkcs11" : false
     // }
-  },
+  //},
 
   // Parameters of the HTTP proxy to be used by Orthanc. If set to the
   // empty string, no HTTP proxy is used. For instance:
