@@ -56,8 +56,8 @@ orthanc_docker_image_tag:   "latest"
 ```yaml
 orthanc_container_name:     "orthanc"
 orthanc_use_data_container: True
-orthanc_data_dir:           "/opt/orthanc/db"
-orthanc_config_dir:         "/opt/orthanc"
+orthanc_data_dir:           "/data/{{ orthanc_container_name }}"
+orthanc_config_dir:         "/opt/{{ orthanc_container_name }}"
 orthanc_api_port:           8042
 orthanc_dicom_port:         4242
 orthanc_container_timezone: "America/New_York"
@@ -78,20 +78,43 @@ orthanc_password:           "passw0rd!"
 
 ```yaml
 orthanc_pg_backend:         False
-orthanc_pg_user:            "orthanc"
-orthanc_pg_password:        "passw0rd!"
-orthanc_pg_host:            "localhost"
-orthanc_pg_port:            5432
+orthanc_pg_user:            "{{ orthanc_user }}"
+orthanc_pg_password:        "{{ orthanc_password }}"
+orthanc_pg_database:        "{{ orthanc_container_name }}"
+orthanc_pg_host:             "postgres"
+orthanc_pg_port:             5432
 ```
 
 
 Example Playbook
 ----------------
 
+Run a single orthanc instance.
+
 ```yaml
-- hosts: servers
+- hosts: dicom_node
   roles:
-     - derekmerck.orthanc-docker
+     - derekmerck.orthanc_docker
+```
+
+Run multiple instances against the same backend for load balancing.
+
+```yaml
+- hosts: dicom_node
+  tasks:
+  - include_role:
+      name: derekmerck.orthanc_docker
+    vars:
+      # Independent variables
+      orthanc_api_port:        "804{{ item }}"
+      orthanc_dicom_port:      "424{{ item }}"
+      
+      # Shared variables
+      orthanc_data_dir:        "/data/orthanc"
+      orthanc_docker_image:    "jodogne/orthanc-plugins"
+      orthanc_pg_backend:      True
+      orthanc_db_name:         "orthanc"
+    with_sequence: count=3
 ```
 
 
@@ -99,13 +122,4 @@ License
 -------
 
 MIT
-
-
-Author Information
-------------------
-
-Derek Merck  
-<derek_merck@brown.edu>  
-Rhode Island Hospital and Brown University  
-Providence, RI  
 

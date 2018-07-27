@@ -30,7 +30,7 @@
   become: yes
   notify: stop_orthanc_container
 
-- name: "Pull Orthanc image: {{ orthanc_docker_image }}"
+- name: "Pull Orthanc image - {{ orthanc_docker_image }}:{{ orthanc_docker_image_tag }}"
   docker_image:
     name: '{{ orthanc_docker_image }}'
     tag:  '{{ orthanc_docker_image_tag }}'
