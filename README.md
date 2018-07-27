@@ -17,7 +17,7 @@ Dependencies
 ### Galaxy Roles
 
 - [geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker) to setup the docker environment
-- [geerlingguy.pip](https://github.com/geerlingguy/ansible-role-pip) to install Python reqs
+- [geerlingguy.pip](https://github.com/geerlingguy/ansible-role-pip) to install Python reqs 
 - [matic-insurance.docker-postgres](https://github.com/matic-insurance/ansible-docker-postgres) to setup the postgres backend, if needed
 
 
@@ -38,7 +38,7 @@ Role Variables
 Select an Orthanc image and tag.
 
 - `jodogne/orthanc` is the official vanilla [Orthanc for Docker][] build maintained by Sébastien Jodogne
-- `jodogne/orthanc-plugins` is the official build supporting the Postgresql backend
+- `jodogne/orthanc-plugins` is the official build supporting the Postgresql backend (uses PostgreSQL 10 -- trusty has a problem with installing tools for 9.5)
 - `osimis/orthanc` is a third-party [Osimis for Docker][] spin with an excellent web viewer for review and annotation
 - `derekmerck/orthanc` is a third-party multi-architecture (amd64, arm32v7) bleeding-edge release spin from [diana-plus][]
 

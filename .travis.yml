@@ -11,8 +11,14 @@ addons:
     packages:
       - python-pip
 
+  # Not going to use this one, but it will provide correct client for role upgrade
+  postgresql: "10"
+
 env:
   global:
+    # Move existing PG to a different port
+    PGPORT: 5433
+
     # Defaults
     test_host:        localhost
     orthanc_user:     orthanc
