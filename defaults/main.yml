@@ -12,6 +12,7 @@ orthanc_docker_image_tag:   "latest"
 # Docker container configuration
 # -----------------------------
 orthanc_container_name:     "orthanc"
+orthanc_verbose:            False
 orthanc_use_data_container: True
 orthanc_data_dir:           "/data/{{ orthanc_container_name }}/db"
 orthanc_config_dir:         "/opt/{{ orthanc_container_name }}"

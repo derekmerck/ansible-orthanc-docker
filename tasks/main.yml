@@ -51,6 +51,9 @@
       - '{{ orthanc_api_port }}:8042'
       - '{{ orthanc_dicom_port }}:4242'
 
+    entrypoint:  ["Orthanc"]
+    command:   '{{ ["/etc/orthanc"] + (["--verbose"] if orthanc_verbose else []) }}'
+
     volumes_from: '{{ [orthanc_container_name + "-data"] if orthanc_use_data_container else [] }}'
 
     volumes: '{{ ["{}:/etc/orthanc:ro".format(orthanc_config_dir)] + ([orthanc_data_dir + ":/var/lib/orthanc/db:z"] if not orthanc_use_data_container else []) }}'
