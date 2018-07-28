@@ -139,7 +139,7 @@
   // The list of the registered users. Because Orthanc uses HTTP
   // Basic Authentication, the passwords are stored as plain text.
   "RegisteredUsers" :
-    {{ orthanc_users | default({}) | combine({"orthanc": orthanc_password}) | to_nice_json | safe | regex_replace('\_(?=.*": {)', '-')}},
+  {{ orthanc_users | default({}) | combine({"orthanc": orthanc_password}) | to_nice_json | safe | regex_replace('\_(?=.*": {)', '-')}},
 
   /**
    * Network topology
@@ -147,10 +147,7 @@
 
   // The list of the known DICOM modalities
   // If port is quoted, it complains about not being an int, so use regex to remove "'s
-  {%  if orthanc_modalities | default(false) %}
-  "DicomModalities":
-     {{ orthanc_modalities | to_nice_json | safe | regex_replace('"([0-9]+)"','\\1') }} ,
-  {% endif %}
+  "DicomModalities" : {{ orthanc_modalities | default({}) | to_nice_json | safe | regex_replace('"([0-9]+)"','\\1') }} ,
 
 
   //"DicomModalities" : {
@@ -200,11 +197,7 @@
   "DicomScuTimeout" : 10,
 
   // No underscores allowed!  Use a look ahead to find just the keys
-  {% if orthanc_peers | default(false) %}
-  "OrthancPeers" :
-     {{ orthanc_peers | to_nice_json | safe | regex_replace('\_(?=.*": {)', '-')}},
-  {% endif %}
-
+  "OrthancPeers" : {{ orthanc_peers | default({}) | to_nice_json | safe | regex_replace('\_(?=.*": {)', '-') }},
 
   // The list of the known Orthanc peers
   // "OrthancPeers" : {

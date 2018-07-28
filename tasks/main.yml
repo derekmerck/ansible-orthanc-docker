@@ -1,7 +1,12 @@
 ---
 # tasks file for orthanc-docker
 
-# TODO: Change container to not link to postgres, but call it on the docker bridge like snappass->redis, nginx->subs
+- name: Get dockerhost
+  shell: /sbin/ip route | awk '/docker0/ { print $NF }'
+  register: dockerhost_response
+
+- set_fact:
+    dockerhost_ip:    "{{ dockerhost_response.stdout }}"
 
 - name: Create data container
   docker_container:
@@ -49,7 +54,6 @@
     volumes_from: '{{ [orthanc_container_name + "-data"] if orthanc_use_data_container else [] }}'
 
     volumes: '{{ ["{}:/etc/orthanc:ro".format(orthanc_config_dir)] + ([orthanc_data_dir + ":/var/lib/orthanc/db:z"] if not orthanc_use_data_container else []) }}'
-    links: '{{ [orthanc_pg_host] if orthanc_pg_backend else [] }}'
     env:
       TZ: '{{ orthanc_container_timezone }}'
   register: orthanc_container

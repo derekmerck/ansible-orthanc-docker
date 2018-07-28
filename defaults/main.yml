@@ -43,5 +43,5 @@ orthanc_pg_backend:         False
 orthanc_pg_user:            "{{ orthanc_user }}"
 orthanc_pg_password:        "{{ orthanc_password }}"
 orthanc_pg_database:        "{{ orthanc_container_name }}"
-orthanc_pg_host:             "postgres"
+orthanc_pg_host:            "{{ dockerhost_ip }}"
 orthanc_pg_port:             5432
