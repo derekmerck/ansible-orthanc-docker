@@ -42,10 +42,17 @@ install:
   - pip install ansible
 
   # Install deps
-  - ansible-galaxy install geerlingguy.pip geerlingguy.docker matic-insurance.docker-postgres
+  - ansible-galaxy install
+      geerlingguy.pip
+      geerlingguy.docker
+      matic-insurance.docker-postgres
 
 script:
   # We'll add some commands to test the role here.
+
+  - 'ansible-playbook -i tests/test_inv.yml tests/test_fernet.yml --connection=local --sudo
+     -e test_host=${test_host}'
+
   # Check the role/playbook's syntax.
   - 'ansible-playbook -i tests/test_inv.yml tests/test_play.yml --syntax-check
      -e test_host=${test_host}'

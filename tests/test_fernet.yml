@@ -1,0 +1,52 @@
+- name: test fernet filter plugin
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    key: 't8YHZXpNvk_OFPkvyWc2rDWUxp7qXY6tiHr10f_PG3Y='
+    message: "The foo is in the baz today"
+
+    user_passwords:
+      user1: "gAAAAABbcFt-3M4t288flnG2xY88xKPx4U1l1phZtv4hDpnjNx3Mq8s9MnY74dY6Ab35qp6voKAVGJ9BMT8wlthPY4COk16sIg=="
+      user2: "gAAAAABbcFrtnhBWtrEC8QXvqByYsyEEqNKC2mP2joN4rcK58RNZIdKqMLErq-Lki6NhPSvpv_Y7fkYJRuaM4Gbt0QFFYZtZmQ=="
+      user3: "gAAAAABbcFsn2jUAVLd2PleS9MFD3i__PZY-UjKSMUC7ee5zmWN2Ok-l9TLgyzmHjxSOXhVGQkZ3qEfnh_4nZzyfQfsxK1flwA=="
+
+    real_passwords:
+      user1: "password"
+      user2: "passw0rd!"
+      user3: "P455w0rD?-"
+
+  tasks:
+
+    - debug: var=key
+
+    - name: encrypt message
+      set_fact:
+        token: "{{ message | encrypt(key) }}"
+      register: token
+
+    - debug: var=token
+
+    - name: decrypt token
+      set_fact:
+        decoded: "{{ token | decrypt(key) }}"
+      register: decoded
+
+    - debug: var=decoded
+
+    - name: is decoded what we expect?
+      debug:
+        var: decoded
+      failed_when: decoded != message
+
+    - name: encode user passwords
+      set_fact:
+        user_passwords: "{{ user_passwords | combine( { item.key:item.value | decrypt(key) } ) }}"
+      with_dict: '{{ user_passwords }}'
+      when: key is defined
+
+    - name: is decoded what we expect?
+      debug:
+        var: user_passwords
+      failed_when: user_passwords != real_passwords
+

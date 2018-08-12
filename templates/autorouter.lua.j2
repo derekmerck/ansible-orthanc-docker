@@ -1,6 +1,6 @@
 function OnStoredInstance(instanceId, tags, metadata)
 
-    {%- for d in destinations %}
+    {%- for d in orthanc_destinations %}
         {%- if d.type == "dicom" %}
 
     SendToModality( instanceId, '{{ d.dest }}' )
