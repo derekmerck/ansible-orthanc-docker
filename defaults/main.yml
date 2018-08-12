@@ -38,6 +38,11 @@ orthanc_password:           "passw0rd!"
 #   my_pacs: ["MY_PACS", "192.168.1.1", 104 ]
 #   my_workstation: ["MY_WORKSTATION", "192.168.1.2", 104 ]
 
+# Routing configuration
+# -----------------------------
+orthanc_anonymize:          False
+orthanc_compress:           False
+
 # orthanc_destinations:
 #   - dest: my_peer
 #     type: peer

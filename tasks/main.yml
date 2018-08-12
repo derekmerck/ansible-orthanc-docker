@@ -1,12 +1,20 @@
 ---
 # tasks file for orthanc-docker
 
+#############################
+# Setup dockerhost
+#############################
+
 - name: Get dockerhost
   shell: /sbin/ip route | awk '/docker0/ { print $NF }'
   register: dockerhost_response
 
 - set_fact:
     dockerhost_ip:    "{{ dockerhost_response.stdout }}"
+
+#############################
+# Create required data container and directories
+#############################
 
 - name: Create data container
   docker_container:
@@ -21,14 +29,21 @@
   file:
     path:  "{{ orthanc_data_dir }}"
     state: directory
-  become:  yes
   when: not orthanc_use_data_container
 
 - name: "Create {{ orthanc_config_dir }} directory for config"
   file:
     path: '{{ orthanc_config_dir }}'
     state: directory
-  become: yes
+
+- name: "Create {{ orthanc_config_dir }}/scripts directory for scripts"
+  file:
+    path: '{{ orthanc_config_dir }}/scripts'
+    state: directory
+
+#############################
+# Copy configs
+#############################
 
 - name: "Decoding passwords"
   set_fact:
@@ -40,22 +55,25 @@
   template:
     src: orthanc.json.j2
     dest: '{{ orthanc_config_dir + "/orthanc.json" }}'
-  become: yes
   notify: restart_orthanc_container
 
 - name: "Setup routing lua"
-  template: >
-    src: templates/autorouter.lua.j2
+  template:
+    src: "templates/autorouter.lua.j2"
     dest: "{{ orthanc_config_dir }}/scripts/autorouter.lua"
-  when: orthanc_destinations is defined and not orthanc_compress
+  when: orthanc_destinations is defined and orthanc_destinations and (orthanc_compress is not defined or not orthanc_compress)
   notify: restart_orthanc_container
 
 - name: "Setup routing and compression lua"
-  template: >
-    src: templates/j2k_autorouter.lua.j2
+  template:
+    src:  "templates/j2k_autorouter.lua.j2"
     dest: "{{ orthanc_config_dir }}/scripts/autorouter.lua"
-  when: orthanc_destinations is defined and orthanc_compress
+  when: orthanc_destinations is defined and orthanc_destinations and orthanc_compress is defined and orthanc_compress
   notify: restart_orthanc_container
+
+#############################
+# Setup container
+#############################
 
 - name: "Pull Orthanc image - {{ orthanc_docker_image }}:{{ orthanc_docker_image_tag }}"
   docker_image:
@@ -76,10 +94,17 @@
 
     volumes_from: '{{ [orthanc_container_name + "-data"] if orthanc_use_data_container else [] }}'
 
-    volumes: '{{ ["{}:/etc/orthanc:ro".format(orthanc_config_dir)] + ([orthanc_data_dir + ":/var/lib/orthanc/db:z"] if not orthanc_use_data_container else []) }}'
+    volumes: '{{ ["{}:/etc/orthanc:ro".format(orthanc_config_dir),
+                  "{}/scripts:/var/lib/orthanc/scripts:ro".format(orthanc_config_dir)] +
+                  ([orthanc_data_dir + ":/var/lib/orthanc/db:z"] if not orthanc_use_data_container
+                                                                 else []) }}'
     env:
       TZ: '{{ orthanc_container_timezone }}'
   register: orthanc_container
+
+#############################
+# Wait for ready
+#############################
 
 - meta: flush_handlers
 

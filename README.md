@@ -87,6 +87,16 @@ orthanc_peers:              {}
 orthanc_modalities:         {}
 ```
 
+### Routing Configuration
+
+Orthanc can be configured as a router by including a dictionary of destinations (peer).  While routing it can optionally anonymize and/or compress data.  See the role `derekmerck/queued-orthanc` for examples of how to construct more flexible routing with a DIANA-Watcher service.
+
+```yaml
+orthanc_anonymize:          False
+orthanc_compress:           False
+orthanc_destinations:       [{dest: peer or modality name, type: peer or dicom}, ..]
+```
+
 ### PostgreSQL Configuration
 
 ```yaml
@@ -127,7 +137,7 @@ Run a single orthanc instance with some additional users and peers
         my_workstation: ["MY_WORKSTATION", "192.168.1.2", 104 ]
 ```
 
-Run a single orthanc instance with additional users and peers using confidential passwords (fernet encoded)
+_Note: This is currently only working for user passwords._ Run a single orthanc instance with additional users and peers using confidential passwords (fernet encoded)  
 
 ```yaml
 - hosts: dicom_node
@@ -162,7 +172,6 @@ Run multiple instances against the same backend for load balancing.
       orthanc_db_name:         "orthanc"
     with_sequence: count=3
 ```
-
 
 Run a multiplexing forwarder with compression
 

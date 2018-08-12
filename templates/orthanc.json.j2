@@ -32,7 +32,7 @@
   // List of paths to the custom Lua scripts that are to be loaded
   // into this instance of Orthanc
   "LuaScripts" : [
-    {%- if settings.orthanc.destinations is defined %}
+    {%- if orthanc_destinations is defined %}
     "/var/lib/orthanc/scripts/autorouter.lua"
     {% endif %}
   ],
