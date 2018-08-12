@@ -30,11 +30,31 @@
     state: directory
   become: yes
 
+- name: "Decoding passwords"
+  set_fact:
+    orthanc_users: "{{ orthanc_users | combine( { item.key:item.value | decrypt(key) } ) }}"
+  with_dict: '{{ orthanc_users }}'
+  when: orthanc_users is defined and fernet_key is defined
+
 - name: 'Add {{ orthanc_config_dir }}/orthanc.json'
   template:
     src: orthanc.json.j2
     dest: '{{ orthanc_config_dir + "/orthanc.json" }}'
   become: yes
+  notify: restart_orthanc_container
+
+- name: "Setup routing lua"
+  template: >
+    src: templates/autorouter.lua.j2
+    dest: "{{ orthanc_config_dir }}/scripts/autorouter.lua"
+  when: orthanc_destinations is defined and not orthanc_compress
+  notify: restart_orthanc_container
+
+- name: "Setup routing and compression lua"
+  template: >
+    src: templates/j2k_autorouter.lua.j2
+    dest: "{{ orthanc_config_dir }}/scripts/autorouter.lua"
+  when: orthanc_destinations is defined and orthanc_compress
   notify: restart_orthanc_container
 
 - name: "Pull Orthanc image - {{ orthanc_docker_image }}:{{ orthanc_docker_image_tag }}"

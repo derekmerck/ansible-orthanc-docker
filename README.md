@@ -21,6 +21,11 @@ Dependencies
 - [matic-insurance.docker-postgres](https://github.com/matic-insurance/ansible-docker-postgres) to setup the postgres backend, if needed
 
 
+### Local Node
+
+- Python Cryptography, if password secrets are encrypted
+
+
 ### Remote Node
 
 - [Docker][]
@@ -112,15 +117,31 @@ Run a single orthanc instance with some additional users and peers
   roles:
     - name: derekmerck.orthanc_docker
       orthanc_users:
-        my_user: my_password        
-        my_other_user: another_password        
+        user1: password        
+        user2: passw0rd!        
       orthanc_peers:
-        my_peer:       [ "http://127.0.0.1:8043/", "alice", "alicePassword" ]
-        my_other_peer: [ "http://127.0.0.1:8043/", "bob", "bobPassword"]
+        my_peer:       [ "http://127.0.0.1:8043/", "user1", "password" ]
+        my_other_peer: [ "http://127.0.0.1:8043/", "user2", "passwOrd!"]
       orthanc_modalities:
         my_pacs:        ["MY_PACS", "192.168.1.1", 104 ]
         my_workstation: ["MY_WORKSTATION", "192.168.1.2", 104 ]
 ```
+
+Run a single orthanc instance with additional users and peers using confidential passwords (fernet encoded)
+
+```yaml
+- hosts: dicom_node
+  vars:
+    fernet_key: 't8YHZXpNvk_OFPkvyWc2rDWUxp7qXY6tiHr10f_PG3Y='
+  roles:
+    - name: derekmerck.orthanc_docker
+      orthanc_users:
+        user1: "gAAAAABbcFt-3M4t288flnG2xY88xKPx4U1l1phZtv4hDpnjNx3Mq8s9MnY74dY6Ab35qp6voKAVGJ9BMT8wlthPY4COk16sIg=="        
+        user2: "gAAAAABbcFrtnhBWtrEC8QXvqByYsyEEqNKC2mP2joN4rcK58RNZIdKqMLErq-Lki6NhPSvpv_Y7fkYJRuaM4Gbt0QFFYZtZmQ=="
+      orthanc_peers:
+        my_peer:       [ "http://127.0.0.1:8043/", "user1", "gAAAAABbcFt-3M4t288flnG2xY88xKPx4U1l1phZtv4hDpnjNx3Mq8s9MnY74dY6Ab35qp6voKAVGJ9BMT8wlthPY4COk16sIg==" ]
+        my_other_peer: [ "http://127.0.0.1:8043/", "user2", "gAAAAABbcFrtnhBWtrEC8QXvqByYsyEEqNKC2mP2joN4rcK58RNZIdKqMLErq-Lki6NhPSvpv_Y7fkYJRuaM4Gbt0QFFYZtZmQ=="]
+
 
 Run multiple instances against the same backend for load balancing.
 
@@ -142,6 +163,24 @@ Run multiple instances against the same backend for load balancing.
     with_sequence: count=3
 ```
 
+
+Run a multiplexing forwarder with compression
+
+```yaml
+- hosts: dicom_node
+  roles:
+    - name: derekmerck.orthanc_docker
+      orthanc_peers:
+        my_peer:       [ "http://127.0.0.1:8043/", "user1", "password" ]
+      orthanc_modalities:
+        my_workstation: ["MY_WORKSTATION", "192.168.1.2", 104 ]
+      orthanc_destinations:
+        - dest: my_peer
+          type: peer
+        - dest: my_workstation
+          type: dicom
+      orthanc_compression: True
+```
 
 License
 -------

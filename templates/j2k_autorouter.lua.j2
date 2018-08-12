@@ -54,7 +54,7 @@ function OnStoredInstance(instanceId, tags, metadata, origin)
         end
 
         -- forward instanceId to the destination(s) and delete
-        {%- for d in destinations %}
+        {%- for d in orthanc_destinations %}
             {%- if d.type == "dicom" %}
 
         SendToModality( instanceId, '{{ d.dest }}' )
