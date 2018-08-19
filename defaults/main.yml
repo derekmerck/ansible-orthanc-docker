@@ -14,8 +14,12 @@ orthanc_docker_image_tag:   "latest"
 orthanc_container_name:     "orthanc"
 orthanc_verbose:            False
 orthanc_use_data_container: True
-orthanc_data_dir:           "/data/{{ orthanc_container_name }}/db"
-orthanc_config_dir:         "/opt/{{ orthanc_container_name }}"
+
+orthanc_base_data_dir:     "/data"
+orthanc_base_config_dir:   "/config"
+
+orthanc_data_dir:           "{{ orthanc_base_data_dir }}/{{ orthanc_container_name }}/db"
+orthanc_config_dir:         "{{ orthanc_base_config_dir }}/{{ orthanc_container_name }}"
 orthanc_api_port:           8042  # These are port aliases
 orthanc_dicom_port:         4242
 orthanc_container_timezone: "America/New_York"
