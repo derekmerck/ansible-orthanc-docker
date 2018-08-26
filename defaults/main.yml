@@ -26,7 +26,8 @@ orthanc_dicom_port:         4242
 orthanc_container_timezone: "America/New_York"
 
 orthanc_logger:            "{{ logger }}"
-orthanc_log_opts:          "{{ {'splunk-source': orthanc_container_name } if orthanc_logger=='splunk' else {} }}"
+orthanc_log_opts:          "{{ {'splunk-source': orthanc_container_name }
+                               if orthanc_logger=='splunk' else {} }}"
 
 
 # Service configuration
@@ -66,3 +67,4 @@ orthanc_pg_password:        "{{ orthanc_password }}"
 orthanc_pg_database:        "{{ orthanc_container_name }}"
 orthanc_pg_host:            "{{ dockerhost_ip }}"
 orthanc_pg_port:             5432
+orthanc_pg_use_data_container: True

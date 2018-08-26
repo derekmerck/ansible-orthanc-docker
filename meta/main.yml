@@ -1,6 +1,6 @@
 galaxy_info:
   author: Derek Merck
-  description: Configure and run an [Orthanc](https://www.orthanc-server.com) DICOM node in a Docker container
+  description: Configure and run an Orthanc DICOM node in a Docker container
 
   role_name: orthanc-docker
 
@@ -24,6 +24,7 @@ dependencies:
     postgres_password:  '{{ orthanc_pg_password }}'
     postgres_database:  '{{ orthanc_pg_database }}'
     # postgres_port:    '{{ orthanc_pg_port }}'
+    postgres_use_data_container: '{{ orthanc_pg_use_data_container }}'
 #    container_memory_limit: 512m
     # TODO: Should make this _big_ for archives, small for queues
     when: orthanc_pg_backend
