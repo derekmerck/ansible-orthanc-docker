@@ -1,6 +1,10 @@
 ---
 # defaults file for orthanc-docker
 
+data_dir:                  "/data"
+config_dir:                "/config"
+logger:                    "json-file"
+
 # Docker image configurtation
 # -----------------------------
 orthanc_docker_image:       "jodogne/orthanc"         # vanilla
@@ -15,14 +19,15 @@ orthanc_container_name:     "orthanc"
 orthanc_verbose:            False
 orthanc_use_data_container: True
 
-orthanc_base_data_dir:     "/data"
-orthanc_base_config_dir:   "/config"
-
-orthanc_data_dir:           "{{ orthanc_base_data_dir }}/{{ orthanc_container_name }}/db"
-orthanc_config_dir:         "{{ orthanc_base_config_dir }}/{{ orthanc_container_name }}"
+orthanc_data_dir:           "{{ data_dir }}/{{ orthanc_container_name }}/db"
+orthanc_config_dir:         "{{ config_dir }}/{{ orthanc_container_name }}"
 orthanc_api_port:           8042  # These are port aliases
 orthanc_dicom_port:         4242
 orthanc_container_timezone: "America/New_York"
+
+orthanc_logger:            "{{ logger }}"
+orthanc_log_opts:          "{{ {'splunk-source': orthanc_container_name } if orthanc_logger=='splunk' else {} }}"
+
 
 # Service configuration
 # -----------------------------

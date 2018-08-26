@@ -19,10 +19,7 @@ dependencies:
   - role: geerlingguy.pip
     pip_install_packages: docker
 
-  - role: matic-insurance.docker-postgres
-    postgres_docker_image_tag: "9"
-    # TODO: Use PG9 until fix for encrypted passwords in PG10
-    # See https://github.com/ansible/ansible/issues/25823
+  - role: postgres-docker
     postgres_user:      '{{ orthanc_pg_user }}'
     postgres_password:  '{{ orthanc_pg_password }}'
     postgres_database:  '{{ orthanc_pg_database }}'
