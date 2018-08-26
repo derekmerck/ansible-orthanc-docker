@@ -8,9 +8,12 @@
 - name: Get dockerhost
   shell: /sbin/ip route | awk '/docker0/ { print $NF }'
   register: dockerhost_response
+  when: dockerhost_ip is not defined
 
 - set_fact:
     dockerhost_ip:    "{{ dockerhost_response.stdout }}"
+  when: dockerhost_ip is not defined
+
 
 #############################
 # Create required data container and directories
@@ -41,6 +44,7 @@
     path: '{{ orthanc_config_dir }}/scripts'
     state: directory
 
+
 #############################
 # Copy configs
 #############################
@@ -70,6 +74,7 @@
     dest: "{{ orthanc_config_dir }}/scripts/autorouter.lua"
   when: orthanc_destinations is defined and orthanc_destinations and orthanc_compress is defined and orthanc_compress
   notify: restart_orthanc_container
+
 
 #############################
 # Setup container
@@ -105,6 +110,7 @@
     log_options:  "{{ orthanc_log_opts }}"
 
   register: orthanc_container
+
 
 #############################
 # Wait for ready
