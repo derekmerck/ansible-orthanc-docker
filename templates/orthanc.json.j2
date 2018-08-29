@@ -142,7 +142,7 @@
   // The list of the registered users. Because Orthanc uses HTTP
   // Basic Authentication, the passwords are stored as plain text.
   "RegisteredUsers" :
-  {{ orthanc_users | default({}) | combine({"orthanc_user": orthanc_password}) | to_nice_json | safe | regex_replace('\_(?=.*": {)', '-')}},
+  {{ orthanc_users | default({}) | combine({ orthanc_user: orthanc_password }) | to_nice_json | safe | regex_replace('\_(?=.*": {)', '-')}},
 
   /**
    * Network topology
