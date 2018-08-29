@@ -37,6 +37,8 @@ orthanc_aet:                "ORTHANC"
 orthanc_user:               "orthanc"
 orthanc_password:           "passw0rd!"
 
+orthanc_max_pts:            0
+
 # orthanc_users:
 #   my_user: some_password
 #

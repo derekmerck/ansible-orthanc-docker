@@ -16,8 +16,10 @@ galaxy_info:
 dependencies:
 
   - role: geerlingguy.docker
+    tags: deps
   - role: geerlingguy.pip
     pip_install_packages: docker
+    tags: deps
 
   - role: postgres-docker
     postgres_user:      '{{ orthanc_pg_user }}'
@@ -27,4 +29,5 @@ dependencies:
     postgres_use_data_container: '{{ orthanc_pg_use_data_container }}'
 #    container_memory_limit: 512m
     # TODO: Should make this _big_ for archives, small for queues
+    tags: deps
     when: orthanc_pg_backend
