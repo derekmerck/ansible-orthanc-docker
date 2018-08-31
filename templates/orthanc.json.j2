@@ -152,31 +152,6 @@
   // If port is quoted, it complains about not being an int, so use regex to remove "'s
   "DicomModalities" : {{ orthanc_modalities | default({}) | to_nice_json | safe | regex_replace('"([0-9]+)"','\\1') }} ,
 
-
-  //"DicomModalities" : {
-    /**
-     * Uncommenting the following line would enable Orthanc to
-     * connect to an instance of the "storescp" open-source DICOM
-     * store (shipped in the DCMTK distribution) started by the
-     * command line "storescp 2000".
-     **/
-    // "sample" : [ "STORESCP", "127.0.0.1", 2000 ]
-
-    /**
-     * A fourth parameter is available to enable patches for
-     * specific PACS manufacturers. The allowed values are currently:
-     * - "Generic" (default value),
-     * - "GenericNoWildcardInDates" (to replace "*" by "" in date fields
-     *   in outgoing C-Find requests originating from Orthanc)
-     * - "GenericNoUniversalWildcard" (to replace "*" by "" in all fields
-     *   in outgoing C-Find SCU requests originating from Orthanc)
-     * - "StoreScp" (storescp tool from DCMTK),
-     * - "ClearCanvas", "Dcm4Chee" and "Vitrea".
-     * This parameter is case-sensitive.
-     **/
-    // "clearcanvas" : [ "CLEARCANVAS", "192.168.1.1", 104, "ClearCanvas" ]
-  //},
-
   // Whether the Orthanc SCP allows incoming C-Echo requests, even
   // from SCU modalities it does not know about (i.e. that are not
   // listed in the "DicomModalities" option above). Orthanc 1.3.0
