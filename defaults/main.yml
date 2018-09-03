@@ -4,6 +4,8 @@
 data_dir:                  "/data"
 config_dir:                "/config"
 logger:                    "json-file"
+log_opts:                  {}
+service_password:          "passw0rd!"
 
 # Docker image configurtation
 # -----------------------------
@@ -26,8 +28,7 @@ orthanc_dicom_port:         4242
 orthanc_container_timezone: "America/New_York"
 
 orthanc_logger:            "{{ logger }}"
-orthanc_log_opts:          "{{ {'splunk-source': orthanc_container_name }
-                               if orthanc_logger=='splunk' else {} }}"
+orthanc_log_opts:          '{{ log_opts | combine( {"splunk-source": orthanc_container_name} ) if logger=="splunk" else log_opts }}'
 
 
 # Service configuration
@@ -35,8 +36,9 @@ orthanc_log_opts:          "{{ {'splunk-source': orthanc_container_name }
 orthanc_title:              "Orthanc"
 orthanc_aet:                "ORTHANC"
 orthanc_user:               "orthanc"
-orthanc_password:           "passw0rd!"
+orthanc_password:           "{{ service_password }}"
 
+# 0 = unlimitted
 orthanc_max_pts:            0
 
 # orthanc_users:
