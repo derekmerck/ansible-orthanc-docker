@@ -77,6 +77,21 @@
 
 
 #############################
+# Setup PG database if required
+#############################
+
+- name: "Add PG database"
+  include_role:
+    name: postgres-docker
+    tasks_from: add_database_play
+  vars:
+    postgres_user:      '{{ orthanc_pg_user }}'
+    postgres_password:  '{{ orthanc_pg_password }}'
+    postgres_database:  '{{ orthanc_pg_database }}'
+  when: orthanc_pg_backend
+
+
+#############################
 # Setup container
 #############################
 
