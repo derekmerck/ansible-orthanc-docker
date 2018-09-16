@@ -237,8 +237,16 @@
   // entry must map an unique string to an unique number between 1024
   // and 65535. Reserved values:
   //  - The Orthanc whole-slide imaging plugin uses metadata 4200
+  //  - 8900-8999 is used by DIANA
   "UserMetadata" : {
-    // "Sample" : 1024
+    "SubmittingSite"      : 8900,
+    "SubmissionMechanism" : 8901,
+    "SubmissionDate"      : 8902,
+    "TrueStudyDate"       : 8903,
+    "PartialPatientName"  : 8904,
+    "PartialPatientID"    : 8905,
+    "DataSignature"       : 8906,
+    "KeySignature"        : 8907
   },
 
   // Dictionary of symbolic names for the user-defined types of
