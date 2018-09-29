@@ -1,4 +1,6 @@
 ---
+# $ orthanc_docker_image="osimis/orthanc" ansible-playbook -i tests/test_inv.yml tests/test_play.yml -e test_host=vagrant --skip-tags deps -b
+
 - hosts: '{{ test_host | default( "localhost") }}'
   roles:
 
@@ -6,16 +8,16 @@
       orthanc_docker_image: "{{ lookup('env', 'orthanc_docker_image') }}"
       orthanc_pg_backend:   "{{ lookup('env', 'orthanc_pg_backend') | bool }}"
 
-      orthanc_users:
-        someuser: some_password
+#      orthanc_users:
+#        someuser: some_password
 
-      orthanc_peers:
-        my-peer:       [ "http://127.0.0.1:8043/", "alice", "alicePassword" ]
-        my-other-peer: [ "http://127.0.0.1:8043/", "bob", "bobPassword"]
+#      orthanc_peers:
+#        my-peer:       [ "http://127.0.0.1:8043/", "alice", "alicePassword" ]
+#        my-other-peer: [ "http://127.0.0.1:8043/", "bob", "bobPassword"]
 
-      orthanc_modalities:
-        my-pacs: ["MY_PACS", "192.168.1.1", 104 ]
-        my-workstation: ["MY_WORKSTATION", "192.168.1.2", 104 ]
+#      orthanc_modalities:
+#        my-pacs:        ["MY_PACS", "192.168.1.1", 104 ]
+#        my-workstation: ["MY_WORKSTATION", "192.168.1.2", 104 ]
 
       #orthanc_autorouting:
       #  - type: peer

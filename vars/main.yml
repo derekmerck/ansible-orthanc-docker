@@ -1,0 +1,24 @@
+---
+
+# Osimis can be configured almost entirely through env vars, so we can
+# skip the conf file and include it all here.
+# TODO: Have to include user accounts by hand though
+
+osimis_env:
+  TZ:                 '{{ orthanc_container_timezone }}'
+  WVB_BUNDLE_DEFAULTS: "true"
+  WVB_ENABLED:        "true"
+  PG_BUNDLE_DEFAULTS: "{{ orthanc_pg_backend | lower }}"
+  PG_ENABLED:         "{{ orthanc_pg_backend | lower }}"
+  PG_HOST:            "{{ orthanc_pg_host }}"
+  PG_PORT:            "{{ orthanc_pg_port | default(5432) }}"
+  PG_DB:              "{{ orthanc_pg_database }}"
+  PG_USER:            "{{ orthanc_pg_user }}"
+  PG_PASSWORD:        "{{ orthanc_pg_password }}"
+  TITLE:              "{{ orthanc_title }}"
+  DICOM_AET:          "{{ orthanc_aet }}"
+osimis_entrypoint:    "/docker-entrypoint.sh"
+
+orthanc_env:
+  TZ:                 '{{ orthanc_container_timezone }}'
+orthanc_entrypoint:    "Orthanc"

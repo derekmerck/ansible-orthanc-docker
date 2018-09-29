@@ -60,6 +60,7 @@
     src: orthanc.json.j2
     dest: '{{ orthanc_config_dir + "/orthanc.json" }}'
   notify: restart_orthanc_container
+  when: orthanc_docker_image != "osimis/orthanc"
 
 - name: "Setup routing lua"
   template:
@@ -109,17 +110,16 @@
       - '{{ orthanc_api_port }}:8042'
       - '{{ orthanc_dicom_port }}:4242'
 
-    entrypoint:  ["Orthanc"]
+    entrypoint:  '{{ [ orthanc_entrypoint if orthanc_docker_image != "osimis/orthanc" else osimis_entrypoint ] }}'
     command:   '{{ ["/etc/orthanc"] + (["--verbose"] if orthanc_verbose else []) }}'
 
     volumes_from: '{{ [orthanc_container_name + "-data"] if orthanc_use_data_container else [] }}'
 
-    volumes: '{{ ["{}:/etc/orthanc:ro".format(orthanc_config_dir),
+    volumes: '{{ ["{}:/etc/orthanc".format(orthanc_config_dir),
                   "{}/scripts:/var/lib/orthanc/scripts:ro".format(orthanc_config_dir)] +
                   ([orthanc_data_dir + ":/var/lib/orthanc/db:z"] if not orthanc_use_data_container
                                                                  else []) }}'
-    env:
-      TZ: '{{ orthanc_container_timezone }}'
+    env: '{{ orthanc_env if orthanc_docker_image != "osimis/orthanc" else osimis_env }}'
 
     log_driver:   "{{ orthanc_logger }}"
     log_options:  "{{ orthanc_log_opts }}"

@@ -18,7 +18,7 @@ Dependencies
 
 - [geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker) to setup the docker environment
 - [geerlingguy.pip](https://github.com/geerlingguy/ansible-role-pip) to install Python reqs 
-- [matic-insurance.docker-postgres](https://github.com/matic-insurance/ansible-docker-postgres) to setup the postgres backend, if needed
+- [derekmerck.postgres-docker](https://github.com/derekmerck/ansible-postgres-docker) to setup the postgres backend, if needed
 
 
 ### Local Node
@@ -40,21 +40,25 @@ Role Variables
 
 ### Docker Image and Tag
 
-Select an Orthanc image and tag.
-
-- `jodogne/orthanc` is the official vanilla [Orthanc for Docker][] build maintained by Sébastien Jodogne
-- `jodogne/orthanc-plugins` is the official build supporting the Postgresql backend (uses PostgreSQL 10 -- trusty has a problem with installing tools for 9.5)
-- `osimis/orthanc` is a third-party [Osimis for Docker][] spin with an excellent web viewer for review and annotation
-- `derekmerck/orthanc` is a third-party multi-architecture (amd64, arm32v7) bleeding-edge release spin from [diana-plus][]
-
-[Orthanc For Docker]: http://book.orthanc-server.com/users/docker.html
-[Osimis for Docker]: https://osimis.atlassian.net/wiki/spaces/OKB/pages/26738689/How+to+use+osimis+orthanc+Docker+images
-[diana-plus]: https://github.com/derekmerck/diana_plus
-
 ```yaml
 orthanc_docker_image:       "jodogne/orthanc"
 orthanc_docker_image_tag:   "latest"
 ```
+
+Select an Orthanc image and tag.
+
+- `jodogne/orthanc` is the official vanilla [Orthanc for Docker][] build maintained by Sébastien Jodogne.
+- `jodogne/orthanc-plugins` is the official build supporting the Postgresql backend (role uses PostgreSQL 10 -- trusty has a problem with installing tools for 9.5).
+- `osimis/orthanc` is a third-party [Osimis for Docker][] spin with an excellent web viewer for review and annotation.
+- `derekmerck/orthanc` is a third-party multi-architecture (amd64, arm32v7, aarch64) bleeding-edge release spin of Orthanc from [DIANA][].  It includes [GDCM][] for on-the-fly JPG compression.  Source and Dockerfiles are on github in the [xarch-orthanc-docker][] project.
+- `derekmerck/orthanc-plugins` is the corresponding multi-architecture spin with support for the PostgreSQL backend
+
+[Orthanc For Docker]: http://book.orthanc-server.com/users/docker.html
+[Osimis for Docker]: https://osimis.atlassian.net/wiki/spaces/OKB/pages/26738689/How+to+use+osimis+orthanc+Docker+images
+[DIANA]: https://github.com/derekmerck/diana
+[xarch-orthanc-docker]: https://github.com/derekmerck/xarch-orthanc-docker
+[Grassroots DICOM]: http://gdcm.sourceforge.net/wiki/index.php/Main_Page
+
 
 ### Docker Container Configuration
 
@@ -62,7 +66,7 @@ orthanc_docker_image_tag:   "latest"
 orthanc_container_name:     "orthanc"
 orthanc_use_data_container: True
 orthanc_data_dir:           "/data/{{ orthanc_container_name }}"
-orthanc_config_dir:         "/opt/{{ orthanc_container_name }}"
+orthanc_config_dir:         "/config/{{ orthanc_container_name }}"
 orthanc_api_port:           8042
 orthanc_dicom_port:         4242
 orthanc_container_timezone: "America/New_York"
@@ -89,7 +93,7 @@ orthanc_modalities:         {}
 
 ### Routing Configuration
 
-Orthanc can be configured as a router by including a dictionary of destinations (peer).  While routing it can optionally anonymize and/or compress data.  See the role `derekmerck/queued-orthanc` for examples of how to construct more flexible routing with a DIANA-Watcher service.
+Orthanc can be configured as a router by including a dictionary of destinations (peer).  While routing, Orthanc can optionally anonymize and/or compress data.  See the role `derekmerck/queued-orthanc` for examples of how to construct more flexible routing using a "DIANA-Watcher" service.
 
 ```yaml
 orthanc_anonymize:          False
@@ -170,7 +174,7 @@ Run multiple instances against the same backend for load balancing.
       orthanc_docker_image:    "jodogne/orthanc-plugins"
       orthanc_pg_backend:      True
       orthanc_db_name:         "orthanc"
-    with_sequence: count=3
+    with_sequence: count=5
 ```
 
 Run a multiplexing forwarder with compression
