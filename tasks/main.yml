@@ -89,7 +89,9 @@
     postgres_user:      '{{ orthanc_pg_user }}'
     postgres_password:  '{{ orthanc_pg_password }}'
     postgres_database:  '{{ orthanc_pg_database }}'
-  when: orthanc_pg_backend
+  when: false and orthanc_pg_backend
+
+# TODO: test and fix!
 
 
 #############################
